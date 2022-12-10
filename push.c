@@ -6,7 +6,7 @@
 /*   By: kslik <kslik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:09:56 by kslik             #+#    #+#             */
-/*   Updated: 2022/12/09 19:04:08 by kslik            ###   ########.fr       */
+/*   Updated: 2022/12/10 13:58:17 by kslik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 #include <stdlib.h>
 void printa(int *stack, int l)
 {
-    
-    int i = 0;
-    while(i < l)
+    int i = l - 1;
+    if(l == 0)
+        ft_printf("%d", stack[0]);
+    while(i >= 0)
     {
         ft_printf("%d\n", stack[i]);
-        i++;
+        i--;
     }
     ft_printf("\n-\na\n");
 }
@@ -35,6 +36,14 @@ void printb(int *stack, int l)
         i--;
     }
     ft_printf("\n-\nb\n");
+}
+void pa(int *stack,int *stackb,int pbn)
+{
+    int i = 0;
+    static int b = 0;
+    stack[b] = stackb[pbn - 1];
+    b++;
+    stackb[pbn - 1] = '\0';
 }
 void pb(int *stack,int *stackb,int l)
 {
@@ -131,6 +140,7 @@ void va(int l, int *arr)
     int pbn;
     int stackb[l];
     int count = 0;
+    int pan = 0;
     while(count < l)
     {
         stack[count] = arr[count];
@@ -142,10 +152,15 @@ void va(int l, int *arr)
     // sa(stack,l);
     pb(stack,stackb, l);
     pb(stack,stackb, l);
-    pbn = 2;
-    ss(stack,stackb, pbn);
+    pb(stack,stackb, l);
+    pb(stack,stackb, l);
+    pb(stack,stackb, l);
+
+    pbn = 5;
+    // // pa(stack, stackb, pbn);
+    pan = 0;
     printa(stack, l - pbn);
-    printb(stackb, pbn);
+    printb(stackb, pbn - pan);
     // sb(stackb , 3);
     
 
