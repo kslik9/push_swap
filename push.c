@@ -6,62 +6,130 @@
 /*   By: kslik <kslik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:09:56 by kslik             #+#    #+#             */
-/*   Updated: 2022/12/08 19:30:51 by kslik            ###   ########.fr       */
+/*   Updated: 2022/12/09 19:04:08 by kslik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include "ft_printf.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <stdlib.h>
+void printa(int *stack, int l)
+{
+    
+    int i = 0;
+    while(i < l)
+    {
+        ft_printf("%d\n", stack[i]);
+        i++;
+    }
+    ft_printf("\n-\na\n");
+}
+void printb(int *stack, int l)
+{
+  
+    int i = l - 1;
+    while(i >= 0)
+    {
+        ft_printf("%d\n", stack[i]);
+        i--;
+    }
+    ft_printf("\n-\nb\n");
+}
+void pb(int *stack,int *stackb,int l)
+{
+    int i = 0;
+    static int b = 0;
+
+    stackb[b] = stack[0];
+
+    b++;
+    while(i < l - b)
+    {
+        stack[i] = stack[i + 1];
+        i++;
+    }
+    stack[l - 1] = '\0';
+}
+int sb1(int *stackb, int l)
+{
+    int i = 0;
+    int m = 0;
+    int tmp[1];
+    if(l > 1)
+    {
+        tmp[0] = stackb[0];
+        stackb[0] = stackb[1];
+        stackb[1] = tmp[0];
+        m++;
+    }
+    return(m);
+}
+int sb(int *stackb, int l)
+{
+    ft_printf("Exec sb\n");
+    int i = 0;
+    int m = 0;
+    int tmp[1];
+    if(l > 1)
+    {
+        tmp[0] = stackb[0];
+        stackb[0] = stackb[1];
+        stackb[1] = tmp[0];
+        m++;
+    }
+    return(m);
+}
 void sa(int *stack, int l)
 {
+   
     ft_printf("Exec sa\n");
     int i = 0;
     int tmp[1];
-    tmp[0] = stack[0];
-    stack[0] = stack[1];
-    stack[1] = tmp[0];
-    i = 0;
-    while(i < l)
+    if(l >= 1)
     {
-        ft_printf("%d\n" ,stack[i]);
-        i++;
+        tmp[0] = stack[0];
+        stack[0] = stack[1];
+        stack[1] = tmp[0];
     }
-    ft_printf("\n-\na");
-
 }
-void sort(int *stack, int l)
+void sa1(int *stack, int l, int m)
 {
+   
     int i = 0;
     int tmp[1];
-    int m = l;
-    while(m >= 0)
+    if(l > 1 && l < m)
     {
-        i = l - 1;
-        while(i > 0)
-        {
-            if(stack[i - 1] < stack[i])
-            {
-                tmp[0] = stack[i];
-                stack[i] = stack[i - 1];
-                stack[i - 1] = tmp[0];
-            }
-            i--;
-        }
-        m--;
+        tmp[0] = stack[0];
+        stack[0] = stack[1];
+        stack[1] = tmp[0];
     }
-    i = 0;
-    // while (i < l)
-    // {
-    //     printf("%d ", stack[i]);
-    //     i++;
-    // }
+    else
+        {
+            int i = 0;
+            int tmp[1];
+            if(l >= 1)
+            {
+                tmp[0] = stack[0];
+                stack[0] = stack[1];
+                stack[1] = tmp[0];
+            }
+        }
 }
+void ss(int *stack, int *stackb, int l)
+{
+    ft_printf("Exec ss\n");
+    int m;
+    m = sb1(stackb, l);
+    sa1(stack,l, m);
+    
+}
+
 void va(int l, int *arr)
 {
     int stack[l];
+    int pbn;
+    int stackb[l];
     int count = 0;
     while(count < l)
     {
@@ -69,8 +137,20 @@ void va(int l, int *arr)
         count++;
     }
     //----------------//
-    sa(stack, l);
-    //sort(stack, l);
+    // sa(stack, 3);
+    // sort(stack, l);
+    // sa(stack,l);
+    pb(stack,stackb, l);
+    pb(stack,stackb, l);
+    pbn = 2;
+    ss(stack,stackb, pbn);
+    printa(stack, l - pbn);
+    printb(stackb, pbn);
+    // sb(stackb , 3);
+    
+
+    // print(stackb, 2);
+
     //----------------//
 }
 int main(int argc, char **argv)
@@ -80,7 +160,7 @@ int main(int argc, char **argv)
     int j = 0;
     while(j < i)
     {
-        arg[j] = atoi(argv[j + 1]);
+        arg[j] = ft_atoi(argv[j + 1]);
         j++;
     }
     va(i , arg);

@@ -6,7 +6,7 @@
 /*   By: kslik <kslik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 11:28:16 by kslik             #+#    #+#             */
-/*   Updated: 2022/12/01 12:10:26 by kslik            ###   ########.fr       */
+/*   Updated: 2022/12/09 10:40:13 by kslik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,30 @@ int	ft_putchar(int c)
 {
 	write(1, &c, 1);
 	return (1);
+}
+
+int	ft_atoi(const char *str)
+{
+	int	i;
+	int	alam;
+	int	n;
+
+	i = 0;
+	alam = 1;
+	n = 0;
+	while (str[i] == '\n' || str[i] == '\t' || str[i] == ' ' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\r')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			alam = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		n = n * 10 + str[i] - 48;
+		i++;
+	}
+	return (n * alam);
 }

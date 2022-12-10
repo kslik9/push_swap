@@ -6,7 +6,7 @@
 /*   By: kslik <kslik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 10:05:43 by kslik             #+#    #+#             */
-/*   Updated: 2022/12/01 11:34:07 by kslik            ###   ########.fr       */
+/*   Updated: 2022/12/09 10:40:22 by kslik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int		u_hexa(unsigned int i);
 int		m_hexa(unsigned int i);
 int		hexo(long int i);
 int		writeline(char *s);
+int	ft_atoi(const char *str);
 char	*calloci(size_t i);
 #endif
