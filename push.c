@@ -6,7 +6,7 @@
 /*   By: kslik <kslik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:09:56 by kslik             #+#    #+#             */
-/*   Updated: 2022/12/10 13:58:17 by kslik            ###   ########.fr       */
+/*   Updated: 2022/12/12 13:09:37 by kslik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,84 @@
 #include "ft_printf.h"
 #include <stdlib.h>
 #include <stdlib.h>
-void printa(int *stack, int l)
+void printa(int *stack, int l, int pbn, int pan)
 {
-    int i = l - 1;
-    if(l == 0)
-        ft_printf("%d", stack[0]);
-    while(i >= 0)
+    int m = l - pbn - 1 + pan;
+    while(m >= 0)
     {
-        ft_printf("%d\n", stack[i]);
-        i--;
+        ft_printf("%d\n",stack[m]);
+        m--;
     }
     ft_printf("\n-\na\n");
 }
-void printb(int *stack, int l)
+void printb(int *stack,int pbn, int pan)
 {
   
-    int i = l - 1;
-    while(i >= 0)
+    int m = pbn - pan - 1;
+    while(m >= 0)
     {
-        ft_printf("%d\n", stack[i]);
-        i--;
+        ft_printf("%d\n",stack[m]);
+        m--;
     }
     ft_printf("\n-\nb\n");
 }
-void pa(int *stack,int *stackb,int pbn)
+void ra(int *stack, int l,int pbn)
 {
-    int i = 0;
-    static int b = 0;
-    stack[b] = stackb[pbn - 1];
-    b++;
-    stackb[pbn - 1] = '\0';
-}
-void pb(int *stack,int *stackb,int l)
-{
-    int i = 0;
-    static int b = 0;
-
-    stackb[b] = stack[0];
-
-    b++;
-    while(i < l - b)
+    int i;
+    i = 0;
+    int m;
+    m = l - pbn;
+    stack[m] = stack[0];
+    while(i < m)
     {
         stack[i] = stack[i + 1];
         i++;
     }
-    stack[l - 1] = '\0';
+    stack[m] = '\0';
+}
+void rb(int *stackb, int pbn)
+{
+    int i;
+    i = 0;
+    stackb[pbn] = stackb[0];
+    while(i < pbn)
+    {
+        stackb[i] = stackb[i + 1];
+        i++;
+    }
+    stackb[pbn] = '\0';
+}
+void pb(int *stack,int *stackb, int l, int *pbn)
+{
+    if(!stack[0])
+        exit(0);
+    static int m = 1;
+    int topa = l - m;
+    static int topb = 0;
+    stackb[topb] = stack[topa];
+    stack[topa] = '\0';
+    m++;
+    topb++;
+    (*pbn)++;
+}
+void rr(int *stack, int l, int pbn, int *stackb)
+{
+    ra(stack, l, pbn);
+    rb(stackb, pbn);
+}
+void pa(int *stack,int *stackb, int pbn, int l, int *pan)
+{
+    if(!stack[0] || !stackb[0])
+        exit(0);
+    static int m = 1;
+    int topb = pbn - m;
+    static int b = 0;
+    int topa = l - pbn - b;
+    stack[topa] = stackb[topb];
+    stackb[topb] = '\0';
+    m++;
+    b--;
+    (*pan)++;
 }
 int sb1(int *stackb, int l)
 {
@@ -133,11 +166,10 @@ void ss(int *stack, int *stackb, int l)
     sa1(stack,l, m);
     
 }
-
 void va(int l, int *arr)
 {
     int stack[l];
-    int pbn;
+    int pbn = 0;
     int stackb[l];
     int count = 0;
     int pan = 0;
@@ -147,27 +179,17 @@ void va(int l, int *arr)
         count++;
     }
     //----------------//
-    // sa(stack, 3);
-    // sort(stack, l);
-    // sa(stack,l);
-    pb(stack,stackb, l);
-    pb(stack,stackb, l);
-    pb(stack,stackb, l);
-    pb(stack,stackb, l);
-    pb(stack,stackb, l);
-
-    pbn = 5;
-    // // pa(stack, stackb, pbn);
-    pan = 0;
-    printa(stack, l - pbn);
-    printb(stackb, pbn - pan);
-    // sb(stackb , 3);
-    
-
-    // print(stackb, 2);
-
+    pb(stack, stackb, l, &pbn);
+    pb(stack, stackb, l, &pbn);
+    pb(stack, stackb, l, &pbn);
+    pb(stack, stackb, l, &pbn);
+    // pa(stack, stackb, pbn, l, &pan);
+    rr (stack, l,pbn, stackb);
+    printa(stack, l, pbn, pan);
+    printb(stackb, pbn, pan);
     //----------------//
 }
+#include <string.h>
 int main(int argc, char **argv)
 {
     int i = argc - 1;
