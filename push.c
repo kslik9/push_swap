@@ -6,7 +6,7 @@
 /*   By: kslik <kslik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:09:56 by kslik             #+#    #+#             */
-/*   Updated: 2022/12/12 13:09:37 by kslik            ###   ########.fr       */
+/*   Updated: 2022/12/12 20:33:13 by kslik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,7 @@ void printb(int *stack,int pbn, int pan)
     }
     ft_printf("\n-\nb\n");
 }
-void ra(int *stack, int l,int pbn)
-{
-    int i;
-    i = 0;
-    int m;
-    m = l - pbn;
-    stack[m] = stack[0];
-    while(i < m)
-    {
-        stack[i] = stack[i + 1];
-        i++;
-    }
-    stack[m] = '\0';
-}
+
 void rb(int *stackb, int pbn)
 {
     int i;
@@ -73,6 +60,56 @@ void pb(int *stack,int *stackb, int l, int *pbn)
     m++;
     topb++;
     (*pbn)++;
+}
+void ra(int *stack, int l,int pbn)
+{
+    int i;
+    i = 0;
+    int m;
+    m = l - pbn;
+    stack[m] = stack[0];
+    while(i < m)
+    {
+        stack[i] = stack[i + 1];
+        i++;
+    }
+    stack[m] = '\0';
+}
+void rrb(int *stackb, int pbn)
+{
+    int m ;
+    int i = pbn;
+    int tmp[0];
+    tmp[0] = stackb[i - 1];
+    m = i - 1;
+    while(m > 0)
+    {
+        stackb[m] = stackb[m - 1];
+        m--;
+    }
+    stackb[0] = tmp[0];
+    stackb[i] = '\0';
+}
+void rra(int *stack, int l, int pbn)
+{
+    int m ;
+    int i = l - pbn;
+    int tmp[0];
+    tmp[0] = stack[i - 1];
+    m = i - 1;
+    while(m > 0)
+    {
+        stack[m] = stack[m - 1];
+        m--;
+    }
+    stack[0] = tmp[0];
+    stack[i] = '\0';
+}
+void rrr(int *stack, int *stackb, int l, int pbn)
+{
+    rra(stack, l, pbn);
+    rrb(stackb, pbn);
+
 }
 void rr(int *stack, int l, int pbn, int *stackb)
 {
@@ -179,12 +216,16 @@ void va(int l, int *arr)
         count++;
     }
     //----------------//
+
+    // ra(stack, l, pbn);
     pb(stack, stackb, l, &pbn);
     pb(stack, stackb, l, &pbn);
     pb(stack, stackb, l, &pbn);
     pb(stack, stackb, l, &pbn);
-    // pa(stack, stackb, pbn, l, &pan);
-    rr (stack, l,pbn, stackb);
+
+    rrr(stack, stackb, l, pbn);
+    
+    // pb(stack, stackb, l, &pan);
     printa(stack, l, pbn, pan);
     printb(stackb, pbn, pan);
     //----------------//
