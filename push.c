@@ -6,23 +6,22 @@
 /*   By: kslik <kslik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:09:56 by kslik             #+#    #+#             */
-/*   Updated: 2022/12/12 20:33:13 by kslik            ###   ########.fr       */
+/*   Updated: 2022/12/17 19:33:37 by kslik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include "ft_printf.h"
-#include <stdlib.h>
-#include <stdlib.h>
+#include "push.h"
+
 void printa(int *stack, int l, int pbn, int pan)
 {
     int m = l - pbn - 1 + pan;
-    while(m >= 0)
+    int i = 0;
+    while(i <= m)
     {
-        ft_printf("%d\n",stack[m]);
-        m--;
+        ft_printf("%d\n",stack[i]);
+        i++;
     }
-    ft_printf("\n-\na\n");
+    ft_printf("\na\n");
 }
 void printb(int *stack,int pbn, int pan)
 {
@@ -33,11 +32,13 @@ void printb(int *stack,int pbn, int pan)
         ft_printf("%d\n",stack[m]);
         m--;
     }
-    ft_printf("\n-\nb\n");
+    ft_printf("\nb\n");
 }
 
 void rb(int *stackb, int pbn)
 {
+    ft_printf("rb\n");
+
     int i;
     i = 0;
     stackb[pbn] = stackb[0];
@@ -50,6 +51,8 @@ void rb(int *stackb, int pbn)
 }
 void pb(int *stack,int *stackb, int l, int *pbn)
 {
+    ft_printf("pb\n");
+
     if(!stack[0])
         exit(0);
     static int m = 1;
@@ -63,6 +66,8 @@ void pb(int *stack,int *stackb, int l, int *pbn)
 }
 void ra(int *stack, int l,int pbn)
 {
+    ft_printf("ra\n");
+
     int i;
     i = 0;
     int m;
@@ -77,6 +82,8 @@ void ra(int *stack, int l,int pbn)
 }
 void rrb(int *stackb, int pbn)
 {
+    ft_printf("rrb\n");
+
     int m ;
     int i = pbn;
     int tmp[0];
@@ -92,6 +99,8 @@ void rrb(int *stackb, int pbn)
 }
 void rra(int *stack, int l, int pbn)
 {
+    ft_printf("rra\n");
+
     int m ;
     int i = l - pbn;
     int tmp[0];
@@ -118,6 +127,8 @@ void rr(int *stack, int l, int pbn, int *stackb)
 }
 void pa(int *stack,int *stackb, int pbn, int l, int *pan)
 {
+    ft_printf("pa\n");
+
     if(!stack[0] || !stackb[0])
         exit(0);
     static int m = 1;
@@ -128,10 +139,13 @@ void pa(int *stack,int *stackb, int pbn, int l, int *pan)
     stackb[topb] = '\0';
     m++;
     b--;
+
     (*pan)++;
 }
 int sb1(int *stackb, int l)
 {
+    ft_printf("sb\n");
+
     int i = 0;
     int m = 0;
     int tmp[1];
@@ -146,7 +160,7 @@ int sb1(int *stackb, int l)
 }
 int sb(int *stackb, int l)
 {
-    ft_printf("Exec sb\n");
+    ft_printf("sb\n");
     int i = 0;
     int m = 0;
     int tmp[1];
@@ -162,7 +176,7 @@ int sb(int *stackb, int l)
 void sa(int *stack, int l)
 {
    
-    ft_printf("Exec sa\n");
+    ft_printf("sa\n");
     int i = 0;
     int tmp[1];
     if(l >= 1)
@@ -174,7 +188,7 @@ void sa(int *stack, int l)
 }
 void sa1(int *stack, int l, int m)
 {
-   
+    ft_printf("sa\n");
     int i = 0;
     int tmp[1];
     if(l > 1 && l < m)
@@ -206,10 +220,8 @@ void ss(int *stack, int *stackb, int l)
 void va(int l, int *arr)
 {
     int stack[l];
-    int pbn = 0;
     int stackb[l];
     int count = 0;
-    int pan = 0;
     while(count < l)
     {
         stack[count] = arr[count];
@@ -218,16 +230,18 @@ void va(int l, int *arr)
     //----------------//
 
     // ra(stack, l, pbn);
-    pb(stack, stackb, l, &pbn);
-    pb(stack, stackb, l, &pbn);
-    pb(stack, stackb, l, &pbn);
-    pb(stack, stackb, l, &pbn);
-
-    rrr(stack, stackb, l, pbn);
-    
+    // pb(stack, stackb, l, &pbn);
+    // pb(stack, stackb, l, &pbn);
+    // pb(stack, stackb, l, &pbn);
+    // pb(stack, stackb, l, &pbn);
+    // pushswap(stack, stackb, l, pbn);
+    // rrr(stack, stackb, l, pbn);
+    sort(stack, stackb, l);
+    // sort_check(stack, l);
+    // ft_printf("%d",min_nbr(stack, l));
     // pb(stack, stackb, l, &pan);
-    printa(stack, l, pbn, pan);
-    printb(stackb, pbn, pan);
+    // printa(stack, l, pbn, pan);
+    // printb(stackb, pbn, pan);
     //----------------//
 }
 #include <string.h>

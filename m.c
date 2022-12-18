@@ -1,31 +1,28 @@
 // #include <stdio.h>
-// void rrb(int *stackb, int pbn)
+// int min_nbr(int *stack, int pbn, int *f)
 // {
-//     int m ;
-//     int i = pbn;
-//     int tmp[0];
-//     tmp[0] = stackb[i - 1];
-//     m = i - 1;
-//     while(m > 0)
+//     int i = 0;
+//     int m = stack[0];
+//     while(i < pbn)
 //     {
-//         stackb[m] = stackb[m - 1];
-//         m--;
+//         if(stack[i] < m)
+//         {
+//             m = stack[i];
+//             (*f) = i;
+//         }
+//         i++;
 //     }
-//     stackb[0] = tmp[0];
-//     stackb[i] = '\0';
+//     return(m);
 // }
-
 // int main()
 // {
-//     int stackb[4];
-//     stackb[0] = 1;
-//     stackb[1] = 2;
-//     stackb[2] = 3;    
-//     stackb[3] = 4;
-//     rrb(stackb, 4);
-//     printf("%d", stackb[0]);
-//     printf("%d", stackb[1]);
-//     printf("%d", stackb[2]);
-//     printf("%d", stackb[3]);
-
+//     int stack[5];
+//     stack[0] = 8;
+//     stack[1] = 3;
+//     stack[2] = 2;    
+//     stack[3] = 8;
+//     stack[4] = 1;
+//     int f = 0;
+//     printf("%d",min_nbr(stack, 5, &f));
+//     printf("f = %d", f);
 // }
